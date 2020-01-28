@@ -1,0 +1,12 @@
+{% extends "bel/base.html" %}
+{% load static %}
+{% block title %}<title>Edit blog {{blog.title}}</title>
+{% endblock title %}
+{% block content %}
+<form action="" method="post"> 
+{% csrf_token %}
+Are you sure you want to delete <strong>{{blog.title}}</strong><br/>
+<input type="submit" name="yes" value="Yes" class="btn btn-danger">
+<input type="submit" name="no" value="No" class="btn btn-light"> 
+</form>
+{% endblock content %}

@@ -1,0 +1,61 @@
+{% extends "bel/base.html" %}
+{% load static %}
+{% block title %}<title>Add blog</title>
+{% endblock title %}
+{% block head %}
+<script src="{% static "bel/ckeditor/ckeditor.js" %}"></script>
+{% endblock head %}
+{% block content %}
+<form action="" method="post">
+{% csrf_token %}
+  <div class="form-group">
+    <label for="title">Title </label>
+    <input type="text" name="title" class="form-control" id="title" aria-describedby="titleHelp" placeholder="Enter title" required maxlength="200" value="{% if title %} {{ title }}{% endif %}">
+    <div class="error">{% if titleError %}Title can't be empty and max 200 lengthy.{% endif %}</div>
+  </div>
+  <div class="form-group">
+    <label for="subtitle">Subtitle </label>
+    <input type="text" name="subtitle" class="form-control" id="subtitle" aria-describedby="subtitleHelp" placeholder="Enter subtitle(*optional)" maxlength="200"  value="{% if subtitle %} {{ subtitle }}{% endif %}">
+    <div class="error">{% if subtitleError %}Subtitle should be max 200 character lengthy.{% endif %}</div>
+  </div>
+  <div class="form-group">
+    <label for="blog">Blog</label>
+    <textarea name="blog" id="blog" rows="10" cols="80" class="form-control" placeholder="Blog goes here" required>{% if blog %} {{ blog }}{% endif %}</textarea>
+    <div class="error">{% if blogError %}Blog have to be more than 10 character longer.{% endif %}</div>
+    <script>
+        CKEDITOR.replace('blog');
+    </script>
+    <script>
+        CKEDITOR.replace('blog', {
+            toolbarGroups =[
+                { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
+                { name: 'links', groups: ['links'] },
+                { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
+                { name: 'insert', groups: ['insert'] },
+                { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
+                { name: 'clipboard', groups: ['clipboard', 'undo'] },
+                { name: 'forms', groups: ['forms'] },
+                { name: 'tools', groups: ['tools'] },
+                { name: 'document', groups: ['mode', 'document', 'doctools'] },
+                { name: 'others', groups: ['others'] },
+                { name: 'styles', groups: ['styles'] },
+                { name: 'colors', groups: ['colors'] },
+                { name: 'about', groups: ['about'] }
+            ];
+
+            removeButtons = 'Underline,Subscript,Superscript,Cut,Copy,Paste,PasteText,PasteFromWord,Scayt,Source,About';
+
+        });
+    </script>
+    <a href="{% static "bel/Imgur-Upload-master/imgur-upload.html" %}" target="_blank">Upload image from device</a>
+  </div>
+
+
+
+
+  {% if error %}
+  <div class="text-danger">{{error}}</div>
+  {% endif %}
+  <button type="submit" class="btn btn-primary w-25">Submit</button>
+</form>
+{% endblock content %}

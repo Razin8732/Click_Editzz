@@ -1,0 +1,10 @@
+img,figure {
+    overflow: hidden;
+    max-width: 100%; 
+    display:block; 
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}

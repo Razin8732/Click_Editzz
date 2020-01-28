@@ -1,0 +1,15 @@
+{% extends "polls/base.html" %}
+
+{% block content %}
+{% for poll in polls %}
+
+<div class="card mt-5" >
+    <div class="card-body ml-3 mt-3">
+        <h3 class="card-title"><a href="{% url 'poll' poll.id%}">{{poll.poll}}</a></h3>
+    </div>
+    <div class="card-footer text-muted">
+        @{{poll.owner.username}} at {{poll.created_at|date:"G:i jS,M"}} expires at {{poll.expires_at|date:"G:i jS,M Y"}} <a href="#">{{category.category}}</a>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}

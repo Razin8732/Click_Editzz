@@ -1,0 +1,22 @@
+{% extends "polls/base.html" %}
+{% block content %}
+{% if user %}
+<h1>User : {{user.username}}</h1>
+<div class="card mt-5" >
+    <div class="card-body ml-3 mt-3">
+        {% if polls %}
+
+            {% for poll in polls %}
+            <ul class="list-group">
+                <li class="list-group-item">
+                <h3 class="card-title"><a href="{% url 'poll' poll.id%}">{{poll.poll}} <small class="text-muted">({{poll.created_at|date:"G:i jS,M"}} - {{poll.expires_at|date:"G:i jS,M Y"}})</small></a></h3>
+                </li>
+            </ul>
+            {% endfor %}
+
+        {% endif %}
+
+    </div>
+</div>
+{% endif %}
+{% endblock content %}

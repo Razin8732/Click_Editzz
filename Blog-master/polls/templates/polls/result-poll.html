@@ -1,0 +1,21 @@
+{% extends "polls/base.html" %}
+{% block content %}
+{% if poll %}
+<h1>Vote Poll</h1>
+<div class="card mt-5" >
+    <div class="card-body ml-3 mt-3">
+        <h3 class="card-title">{{poll.poll}}</h3>
+        <ul class="list-group">
+        {% for key,values in choicesprogress %}
+        <li class="list-group-item">
+        <div>{{key}} <span class="badge badge-primary">{{key.vote}}</span></div>
+        <div class="progress" style="height: 20px;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" role="progressbar" style="width: {{values}}%;color:black;" aria-valuenow="{{values}}" aria-valuemin="0" aria-valuemax="100">{{values}}%</div>
+        </div>
+        </li>
+        {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endif %}
+{% endblock content %}

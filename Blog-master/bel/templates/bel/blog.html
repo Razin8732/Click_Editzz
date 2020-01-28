@@ -1,0 +1,60 @@
+{% extends "bel/base.html" %}
+{% load static %}
+
+{% block title %}
+<title>{{blog.title}}</title>
+{% endblock title %}
+{% block head %}
+<link rel="stylesheet" href="{% static "bel/style/image.css" %}">
+{% endblock head %}
+
+{% block content %}
+<div class="card" >
+  <div class="card-body ml-3 mt-3">
+    <h1 class="card-title">{{blog.title}}</h1>
+    <h3 class="card-subtitle text-muted">{{blog.subtitle}}</h3>
+    <div class="card-text mt-5 ">{{blog.blog|safe}}</div>
+  </div>
+  <div class="card-footer text-muted">
+  {% if blog.blogger.username == username %}
+    <a href="{% url 'blog-edit' blog.id %}">Edit</a>
+    <a href="{% url 'blog-delete' blog.id %}">Delete</a>
+  {% endif %}
+    @{{blog.blogger.username}} at {{blog.created_at|date:"jS,M Y"}}
+  </div>
+</div>
+
+{% if not sameUser and auth %}
+    <a href="{% url 'blog-comment-add' blog.id %}" class="btn btn-secondary btn-lg m-5">Add a comment</a>
+{% endif %}
+
+
+{% if comments %}
+{% for comment in comments %}
+<div class="card mt-5">
+  <div class="card-body ml-3 mt-3">
+    <h4 class="card-title">{{comment.comment}}</h4>
+    {% if comment.responseComment %}
+      <div class="card mt-5">
+        <div class="card-body ml-3 mt-3">
+            <h6 class="card-title">{{comment.responseComment.comment}}</h6>
+        </div>
+        <div class="card-footer text-muted">
+            @{{comment.responseComment.blogger.username}} at {{comment.responseComment.created_at|date:"jS,M Y"}}
+        </div>
+      </div>
+    {% endif %}
+
+    {% if sameUser and auth %}
+        <a href="{% url 'blog-comment-response' blog=blog.id comment=comment.id %}" class="btn btn-secondary btn-lg m-5">Responce</a>
+    {% endif %}
+  </div>
+  <div class="card-footer text-muted">
+      @{{comment.blogger.username}} at {{comment.created_at|date:"jS,M Y"}}
+  </div>
+</div>
+{% endfor %}
+
+{% endif %}
+
+{% endblock content %}

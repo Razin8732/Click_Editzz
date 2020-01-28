@@ -1,0 +1,125 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "brainery/style/background.css" %}">
+    <link rel="stylesheet" href="{% static "brainery/style/font.css" %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
+{% block head %}{% endblock head %}
+{% block title %}<title>Brainery</title>{% endblock title %}
+  </head>
+  <body>
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="{% url 'brainery-home' %}">Brainery</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="nav navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'brainery-home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact us</a>
+                    </li>
+                </ul>
+                {% if auth %}
+                        <a class="btn btn-outline-light mr-2 flaot-right" href="{% url 'brainery-home' %}">{{username}}</a>
+                        <a class="btn btn-outline-light flaot-right" href="{% url 'brainery-logout' %}">Logout</a>
+                {% else %}
+                        <a class="btn btn-outline-light mr-2 flaot-right" href="#" data-toggle="modal" data-target="#login">Login</a>
+                        <a class="btn btn-outline-light flaot-right" href="#" data-toggle="modal" data-target="#signup">Sign up</a>
+
+                    <form method="post" action="{% url 'brainery-login' %}">
+                        <!-- Modal -->
+                        {% csrf_token %}
+                        <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="loginLabel">Login</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="lemail" >Email </label>
+                                            <input type="email" name="lemail" class="form-control" id="lemail" aria-describedby="emailHelp" placeholder="Enter E-mail" required maxlength="254">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="lpassword" >Password</label>
+                                            <input type="password" name="lpassword" class="form-control" id="lpassword" placeholder="Password" required maxlength="30">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Login</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <form method="post" action="{% url 'brainery-register' %}">
+                        {% csrf_token %}
+                        <div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="signupLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="signupLabel">Sign up</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="rname" >Name </label>
+                                            <input type="name" name="rname" class="form-control" id="rname" aria-describedby="nameHelp" placeholder="Enter Name" required maxlength="254">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="remail" >Email </label>
+                                            <input type="email" name="remail" class="form-control" id="remail" aria-describedby="emailHelp" placeholder="Enter E-mail" required maxlength="254">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="rpassword" >Password</label>
+                                            <input type="password" name="rpassword" class="form-control" id="rpassword" placeholder="Password" required maxlength="30">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Sign up</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    
+        <div class="container py-5">
+        {% block content %}
+        {% endblock content %}
+        </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

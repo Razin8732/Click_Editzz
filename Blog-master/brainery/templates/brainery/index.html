@@ -1,0 +1,17 @@
+{% extends "brainery/base.html" %}
+{% block content %}
+<div class="card-deck">
+{% for course in courses %}
+<div class="card shadow-lg rounded-lg" style="max-width: 18rem;">
+    <img src="" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">{{course.title}}</h5>
+    </div>
+    <div class="card-footer">
+        <span class="text-muted">By {{course.instructor.name}}</span>
+        <a class="btn btn-outline-primary stretched-link float-right" href="{% url 'brainery-course-buy' course.id %}">&#8377; {{course.amount}}</a>
+    </div>
+</div>
+{% endfor %}
+</div>
+{% endblock content %}

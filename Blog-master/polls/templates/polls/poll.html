@@ -1,0 +1,32 @@
+{% extends "polls/base.html" %}
+{% block content %}
+{% if poll %}
+<h1>Vote Poll</h1>
+<div class="card mt-5" >
+    <div class="card-body ml-3 mt-3">
+        <h3 class="card-title">{{poll.poll}}</h3>
+        {% if expired %}
+        <ul class="list-group">
+            {% for choice in choices %}
+            <li class="list-group-item">{{choice}}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <form action="" method="post" id="addpost">
+            {% csrf_token %}
+            {% for choice in choices %}
+            <div class="custom-control custom-radio">
+                <input type="radio" id="{{choice}}" name="voteChoice" class="custom-control-input" value="{{choice}}">
+                <label class="custom-control-label" for="{{choice}}">{{choice}}</label>
+            </div>
+            {% endfor %}
+            {% if error %}
+            <div class="text-danger">{{error}}</div>
+            {% endif %}
+            <button type="submit" class="btn btn-primary w-25" id="addpollbtn">Submit</button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endblock content %}

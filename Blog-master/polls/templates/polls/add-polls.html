@@ -1,0 +1,71 @@
+{% extends "polls/base.html" %}
+{% block content %}
+<h1>Add Poll</h1>
+<form action="" method="post" id="addpost">
+{% csrf_token %}
+  <div class="form-group">
+    <label for="poll">Poll </label>
+    <input type="text" name="poll" class="form-control" id="poll" aria-describedby="pollHelp" placeholder="Enter poll" required maxlength="30">
+    <small id="pollHelp" class="form-text text-muted">Keep max 30 character longer</small>
+  </div>
+  <div class="row">
+    <div class="form-group col-12 col-md-3">
+        <label for="category">Category </label>
+        <input type="text" name="category" class="form-control" id="category" aria-describedby="categoryHelp" placeholder="Enter category" required maxlength="30" list="categories">
+        <small id="categoryHelp" class="form-text text-muted">Keep max 30 character longer</small>
+    </div>
+    <div class="form-group col-12 col-md-3">
+        <label for="expire">Expires at </label>
+        <input type="datetime-local" name="expire" class="form-control" id="expire" aria-describedby="expireHelp" placeholder="Enter expire date of poll" required maxlength="30" value="{{expire}}" max="{{expire}}">
+        <small id="categoryHelp" class="form-text text-muted">yyyy-MM-ddThh:mm</small>
+    </div>
+<datalist id="categories">
+{% for category in categories %}
+  <option value="{{category}}">
+{% endfor %}
+</datalist> 
+
+<script type="text/javascript">
+$(document).ready(function(){
+    totalChoice=2;
+    $("#addchoicebtn").click(function(){
+        var number = parseInt($("#choicenumber").val());
+        if(isNaN(number) || number<0) {
+          number = 0;
+        }
+        if(number+totalChoice>6){
+            alert("You can add max 6 choice");
+        }
+        else{
+            for(i=totalChoice+1;i<totalChoice+1+number;i++){
+                $("#spancategory").before('<div class="form-group col col-md-3"><label for="choice'+i+'">Choice '+i+'</label><input type="text" name="choice'+i+'" class="form-control" id="choice'+i+'" aria-describedby="choiceHelp" placeholder="Enter choice" required maxlength="30"></div>');
+            }
+            totalChoice+=number;
+            $("#totalchoicenumber").val(totalChoice);
+        }
+    });
+});
+</script>
+  <div class="form-group col-12 col-md-3">
+    <label for="totalchoicenumber">Total choices </label>
+    <input name="totalchoicenumber" class="form-control" id="totalchoicenumber" aria-describedby="totalchoicenumberHelp" Value="2" readonly disable>
+  </div>
+  <div class="form-group col-12 col-md-3">
+    <label for="choicenumber">Number of choices </label>
+    <input type="number" name="choicenumber" class="form-control" id="choicenumber" aria-describedby="choicenumberHelp" placeholder="Enter choice number"   min="0" max="4">
+    <small id="choicenumberHelp" class="form-text text-muted">Max 6 Min 2</small>
+    <button type="button" class="btn btn-primary w-100" id="addchoicebtn">Add</button>
+  </div>
+</div>
+  {% if error %}
+  <div class="text-danger">{{error}}</div>
+  {% endif %}
+<div class="row">
+  <div class="form-group col col-md-3"><label for="choice1">Choice 1</label><input type="text" name="choice1" class="form-control" id="choice1" aria-describedby="choiceHelp" placeholder="Enter choice" required maxlength="30"></div>
+  <div class="form-group col col-md-3"><label for="choice2">Choice 2</label><input type="text" name="choice2" class="form-control" id="choice2" aria-describedby="choiceHelp" placeholder="Enter choice" required maxlength="30"></div>
+  <span id="spancategory"></span>
+</div>
+  <button type="submit" class="btn btn-primary w-25" id="addpollbtn">Submit</button>
+
+</form>
+{% endblock content %}

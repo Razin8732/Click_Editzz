@@ -1,0 +1,16 @@
+{% extends "polls/admin-base.html" %}
+{% block content %}
+<h1>Add category</h1>
+<form action="" method="post">
+{% csrf_token %}
+  <div class="form-group">
+    <label for="category">Category </label>
+    <input type="text" name="category" class="form-control" id="category" aria-describedby="categoryHelp" placeholder="Enter category" required maxlength="30">
+    <small id="categoryHelp" class="form-text text-muted">Keep max 30 character longer</small>
+  </div>
+  {% if error %}
+  <div class="text-danger">{{error}}</div>
+  {% endif %}
+  <button type="submit" class="btn btn-primary w-25">Submit</button>
+</form>
+{% endblock content %}

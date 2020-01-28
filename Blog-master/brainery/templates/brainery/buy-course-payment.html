@@ -1,0 +1,70 @@
+{% extends "brainery/base.html" %}
+{% block content %}
+<div class="card shadow-lg  rounded-lg" style="max-width: 40rem;">
+    <img src="" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">{{course.title}}</h5>
+    </div>
+    <div class="card-footer">
+        <span class="text-muted">By {{course.instructor.name}} at {{course.created_at}}</span>
+        <span class="btn btn-secondary mx-2 float-right">&#8377; {{course.amount}}</span>
+    </div>
+</div>
+<form method="post" class="mx-auto text-light my-5" style="max-width:30rem;">
+{% csrf_token %}
+ <fieldset>
+
+  <legend>Payment</legend>
+<div class="form-group">
+    <label for="number">Card number </label>
+    <input type="number" name="number" class="form-control" id="number" aria-describedby="numberHelp" placeholder="Enter card number" required maxlength="254">
+</div>
+<div class="row">
+    <div class="col">
+        <div class="form-group">
+            <label for="month">Month </label>
+             <select class="custom-select" name="month" class="form-control" id="month" required>
+                <option value="1">Jan</option>
+                <option value="2">Feb</option>
+                <option value="3">Mar</option>
+                <option value="4">Apr</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">Aug</option>
+                <option value="9">Sep</option>
+                <option value="10">Oct</option>
+                <option value="11">Now</option>
+                <option value="12">Dec</option>
+            </select> 
+        </div>
+    </div>
+    <div class="col">
+        <div class="form-group">
+            <label for="year">Year </label>
+            <select class="custom-select" name="year" class="form-control" id="year" required>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+            </select> 
+        </div>
+    </div>
+    <div class="col">
+        <div class="form-group">
+            <label for="cvv">CVV </label>
+            <input type="number" name="cvv" class="form-control" id="cvv" aria-describedby="cvvHelp" placeholder="Enter CVV" required maxlength="3">
+        </div>
+    </div>
+</div>
+
+{% if error %}<div class="text-danger">{{error}}</div>{% endif %}
+<button class="btn btn-primary">Pay now</button>
+ <fieldset>
+</form>
+
+{% endblock content%}

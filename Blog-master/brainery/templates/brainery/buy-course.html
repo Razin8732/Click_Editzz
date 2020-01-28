@@ -1,0 +1,61 @@
+{% extends "brainery/base.html" %}
+{% block head %}
+<style>
+.card .overflow-auto{
+max-height: 30rem;
+}
+.card .tick li{
+    list-style-type:none;
+    margin-top:8px;
+}
+.card .tick li:nth-child(odd) {
+  background: #eee;
+}
+
+.card .tick li:nth-child(even) {
+  background: #faf;
+}
+.card .tick li::before{
+    content:"✔";
+    padding:4px;
+}
+</style>
+{% endblock head %}
+{% block content %}
+<div class="card shadow-lg  rounded-lg" style="max-width: 40rem;">
+    <img src="" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">{{course.title}}</h5>
+    </div>
+    <div class="card-footer">
+        <span class="text-muted">By {{course.instructor.name}} at {{course.created_at}}</span>
+        <span class="btn btn-secondary mx-2 float-right">&#8377; {{course.amount}}</span>
+        <a class="btn btn-outline-primary stretched-link float-right" href="{% url 'brainery-course-buy-payment' course.id %}"> Buy Now</a>
+    </div>
+</div>
+<div class="row">
+<div class="col col-12 col-lg-6">
+<div class="card  shadow-lg rounded-lg my-3">
+    <div class="card-header">
+        <h5 class="card-title">What you'll learn</h5>
+        <div class="text-dark tick overflow-auto">{{course.learn|safe}}</div>
+    </div>
+</div>
+</div>
+<div class="col col-12 col-lg-6">
+<div class="card shadow-lg rounded-lg my-3">
+    <div class="card-header">
+        <h5 class="card-title">Requirements </h5>
+        <div class="text-danger tick overflow-auto">{{course.prereq|safe}}</div>
+    </div>
+</div>
+</div>
+</div>
+
+<div class="card shadow-lg rounded-lg my-3" >
+    <div class="card-header">
+        <h5 class="card-title">Description</h5>
+        <div class="text-secondary overflow-auto" >{{course.description|safe}}</div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,11 @@
+{% extends "polls/admin-base.html" %}
+
+{% block content %}
+{% for category in categories %}
+<div class="card mt-2" >
+    <div class="card-body ml-3 mt-1">
+        <h5 class="card-title">{{category.category}}</h5>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}
